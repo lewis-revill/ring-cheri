@@ -47,6 +47,8 @@ use core::{
     ops::{Deref, DerefMut},
 };
 
+mod bn_mul_mont_fallback;
+
 pub unsafe trait Prime {}
 
 struct Width<M> {
@@ -1209,6 +1211,7 @@ fn limbs_mont_mul(r: &mut [Limb], a: &[Limb], m: &[Limb], n0: &N0) {
     debug_assert_eq!(a.len(), m.len());
 
     #[cfg(any(
+        target_arch = "morello+c64",
         target_arch = "aarch64",
         target_arch = "arm",
         target_arch = "x86_64",
@@ -1297,6 +1300,7 @@ fn limbs_mont_product(r: &mut [Limb], a: &[Limb], b: &[Limb], m: &[Limb], n0: &N
     debug_assert_eq!(b.len(), m.len());
 
     #[cfg(any(
+        target_arch = "morello+c64",
         target_arch = "aarch64",
         target_arch = "arm",
         target_arch = "x86_64",
@@ -1331,6 +1335,7 @@ fn limbs_mont_product(r: &mut [Limb], a: &[Limb], b: &[Limb], m: &[Limb], n0: &N
 fn limbs_mont_square(r: &mut [Limb], m: &[Limb], n0: &N0) {
     debug_assert_eq!(r.len(), m.len());
     #[cfg(any(
+        target_arch = "morello+c64",
         target_arch = "aarch64",
         target_arch = "arm",
         target_arch = "x86_64",
@@ -1363,6 +1368,7 @@ fn limbs_mont_square(r: &mut [Limb], m: &[Limb], n0: &N0) {
 
 extern "C" {
     #[cfg(any(
+        target_arch = "morello+c64",
         target_arch = "aarch64",
         target_arch = "arm",
         target_arch = "x86_64",

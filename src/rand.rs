@@ -208,6 +208,9 @@ mod sysrand_chunk {
         #[cfg(target_arch = "aarch64")]
         const SYS_GETRANDOM: c_long = 278;
 
+        #[cfg(target_arch = "morello+c64")]
+        const SYS_GETRANDOM: c_long = 278;
+
         #[cfg(target_arch = "arm")]
         const SYS_GETRANDOM: c_long = 384;
 

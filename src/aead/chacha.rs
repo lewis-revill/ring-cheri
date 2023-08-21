@@ -16,6 +16,8 @@
 use super::{counter, iv::Iv, quic::Sample, BLOCK_LEN};
 use crate::{c, endian::*};
 
+mod fallback;
+
 #[repr(transparent)]
 pub struct Key([LittleEndian<u32>; KEY_LEN / 4]);
 
@@ -109,17 +111,31 @@ impl Key {
 
         /// XXX: Although this takes an `Iv`, this actually uses it like a
         /// `Counter`.
+        #[cfg(any(
+            target_arch = "aarch64",
+            target_arch = "arm",
+            target_arch = "x86_64",
+            target_arch = "x86"
+        ))]
         extern "C" {
             fn GFp_ChaCha20_ctr32(
                 out: *mut u8,
                 in_: *const u8,
                 in_len: c::size_t,
                 key: &Key,
-                first_iv: &Iv,
+                first_iv: Iv,
             );
         }
 
-        GFp_ChaCha20_ctr32(output, input, in_out_len, self, &iv);
+        #[cfg(not(any(
+            target_arch = "aarch64",
+            target_arch = "arm",
+            target_arch = "x86_64",
+            target_arch = "x86"
+        )))]
+        use fallback::GFp_ChaCha20_ctr32;
+
+        GFp_ChaCha20_ctr32(output, input, in_out_len, self, iv);
     }
 
     #[cfg(target_arch = "x86_64")]
