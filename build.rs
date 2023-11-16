@@ -35,17 +35,17 @@ const MORELLO: &str = "morello+c64";
 
 #[rustfmt::skip]
 const RING_SRCS: &[(&[&str], &str)] = &[
-    (&[], "crypto/curve25519/curve25519.c"),
-    (&[], "crypto/fipsmodule/aes/aes_nohw.c"),
-    (&[], "crypto/fipsmodule/bn/montgomery.c"),
-    (&[], "crypto/fipsmodule/bn/montgomery_inv.c"),
-    (&[], "crypto/fipsmodule/ec/ecp_nistz.c"),
-    (&[], "crypto/fipsmodule/ec/gfp_p256.c"),
-    (&[], "crypto/fipsmodule/ec/gfp_p384.c"),
-    (&[], "crypto/fipsmodule/ec/p256.c"),
-    (&[], "crypto/limbs/limbs.c"),
-    (&[], "crypto/mem.c"),
-    (&[], "crypto/poly1305/poly1305.c"),
+    (&[MORELLO], "crypto/curve25519/curve25519.c"),
+    (&[MORELLO], "crypto/fipsmodule/aes/aes_nohw.c"),
+    (&[MORELLO], "crypto/fipsmodule/bn/montgomery.c"),
+    (&[MORELLO], "crypto/fipsmodule/bn/montgomery_inv.c"),
+    (&[MORELLO], "crypto/fipsmodule/ec/ecp_nistz.c"),
+    (&[MORELLO], "crypto/fipsmodule/ec/gfp_p256.c"),
+    (&[MORELLO], "crypto/fipsmodule/ec/gfp_p384.c"),
+    (&[MORELLO], "crypto/fipsmodule/ec/p256.c"),
+    (&[MORELLO], "crypto/limbs/limbs.c"),
+    (&[MORELLO], "crypto/mem.c"),
+    (&[MORELLO], "crypto/poly1305/poly1305.c"),
 
     (&[AARCH64, ARM, MORELLO, X86_64, X86], "crypto/crypto.c"),
 
@@ -72,7 +72,7 @@ const RING_SRCS: &[(&[&str], &str)] = &[
     (&[X86_64], "third_party/fiat/asm/fiat_curve25519_adx_mul.S"),
     (&[X86_64], "third_party/fiat/asm/fiat_curve25519_adx_square.S"),
 
-    (&[AARCH64, X86_64], "crypto/fipsmodule/ec/p256-nistz.c"),
+    (&[AARCH64, X86_64, MORELLO], "crypto/fipsmodule/ec/p256-nistz.c"),
 
     (&[AARCH64, ARM], "crypto/fipsmodule/aes/asm/aesv8-armx.pl"),
     (&[AARCH64, ARM], "crypto/fipsmodule/modes/asm/ghashv8-armx.pl"),

@@ -28,6 +28,9 @@
 #elif defined(__x86) || defined(__i386) || defined(__i386__) || defined(_M_IX86)
 #define OPENSSL_32_BIT
 #define OPENSSL_X86
+#elif defined(__AARCH64EL__) && defined(__CHERI__)
+#define OPENSSL_64_BIT
+#define OPENSSL_MORELLO
 #elif defined(__AARCH64EL__) || defined(_M_ARM64)
 #define OPENSSL_64_BIT
 #define OPENSSL_AARCH64
